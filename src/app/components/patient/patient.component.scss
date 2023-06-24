@@ -1,0 +1,23 @@
+.mat-card {
+    width: 100%;
+    margin: 30px;
+    cursor: pointer;
+}
+
+.mat-card:hover {
+    box-shadow: 0 0 8pt 4pt #D3D3D3;
+    outline-width: 0px;    
+    color: #3F51B5 !important;
+    font-weight: 500;
+}
+
+/* Structure */
+table {
+    width: 100%;    
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  

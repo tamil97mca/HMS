@@ -1,0 +1,79 @@
+<!-- <h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>This dialog showcases the title, close, content and actions elements.</div>
+<div mat-dialog-actions>
+    <button mat-raised-button mat-dialog-close (click)="dialogClose()">Close</button>
+    <button mat-raised-button [mat-dialog-close]="data" cdkFocusInitial>{{data.buttonName}}</button>
+</div> -->
+
+<mat-dialog-content [formGroup]="formGroup">
+    <h1 mat-dialog-title>{{data.title}}</h1>
+    <mat-divider></mat-divider>
+    <mat-grid-list cols="2">
+        <mat-grid-tile>
+            <div>        
+            <mat-form-field>
+                <mat-label>Full name</mat-label>
+                <input matInput type="text" placeholder="Martin" required formControlName="name">                
+                <!-- <mat-hint>Hint</mat-hint> -->
+              </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Mobile</mat-label>
+                <input matInput #input type="tel" placeholder="9876543210" maxlength="10" minlength="10" required formControlName="mobile">                
+                <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+              </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput type="email" placeholder="martin@gmail.com" required formControlName="email">                
+                <!-- <mat-hint>Hint</mat-hint> -->
+              </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Gender</mat-label>
+                <!-- <input matInput type="text" placeholder="Male" required> -->
+                <mat-select formControlName="gender">
+                    <mat-option value="Male">Male</mat-option>
+                    <mat-option value="Female">Female</mat-option>
+                    <mat-option value="Others">Others</mat-option>
+                  </mat-select>
+                <!-- <mat-hint>Hint</mat-hint> -->
+              </mat-form-field>  
+            </div>
+            </mat-grid-tile>     
+
+            <mat-grid-tile>
+                <div>
+                    <mat-form-field>
+                        <mat-label>Department</mat-label>
+                        <input matInput placeholder="General" required formControlName="department">                
+                        <!-- <mat-hint>Hint</mat-hint> -->
+                      </mat-form-field>
+        
+                    <mat-form-field>
+                        <mat-label>Birth Date</mat-label>
+                        <input matInput placeholder="27-11-2997" required formControlName="birthdate">                
+                        <!-- <mat-hint>Hint</mat-hint> -->
+                      </mat-form-field>
+        
+                    <mat-form-field>
+                        <mat-label>Qualification</mat-label>
+                        <input matInput placeholder="MBBS" required formControlName="qualifications">                
+                        <!-- <mat-hint>Hint</mat-hint> -->
+                      </mat-form-field> 
+
+                      <mat-form-field>
+                        <mat-label>Status</mat-label>
+                        <input matInput placeholder="Active" required formControlName="status">                
+                        <!-- <mat-hint>Hint</mat-hint> -->
+                      </mat-form-field> 
+
+                </div>
+            </mat-grid-tile>
+    </mat-grid-list>
+</mat-dialog-content>
+
+<div mat-dialog-actions>
+    <button mat-raised-button mat-dialog-close (click)="dialogClose()">Close</button>
+    <button mat-raised-button cdkFocusInitial (click)="openSnackBar('Registration Success', 'OK')">{{data.buttonName}}</button>
+</div>

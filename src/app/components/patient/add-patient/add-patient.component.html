@@ -1,0 +1,61 @@
+<!-- <h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>This dialog showcases the title, close, content and actions elements.</div>
+<div mat-dialog-actions>
+    <button mat-raised-button mat-dialog-close (click)="dialogClose()">Close</button>
+    <button mat-raised-button [mat-dialog-close]="data" cdkFocusInitial>{{data.buttonName}}</button>
+</div> -->
+
+
+
+<mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile-header>
+        <h1 mat-dialog-title>{{data.title}}</h1>
+    </mat-grid-tile-header>
+    <mat-grid-tile>
+        <p>
+            <mat-form-field appearance="outline">
+                <mat-label>Patient Name</mat-label>
+                <input matInput placeholder="Placeholder">
+                <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+        </p>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+        <p>
+            <mat-form-field appearance="outline">
+              <mat-label>Outline form field</mat-label>
+              <input matInput placeholder="Placeholder">
+              <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+              <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+          </p>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <p>
+            <mat-form-field appearance="outline">
+              <mat-label>Outline form field</mat-label>
+              <input matInput placeholder="Placeholder">
+              <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+              <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+          </p>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <p>
+            <mat-form-field appearance="outline">
+              <mat-label>Outline form field</mat-label>
+              <input matInput placeholder="Placeholder">
+              <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+              <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+          </p>
+    </mat-grid-tile>
+
+
+</mat-grid-list>
+<div mat-dialog-actions>
+    <button mat-raised-button mat-dialog-close (click)="dialogClose()">Close</button>
+    <button mat-raised-button [mat-dialog-close]="data" cdkFocusInitial>{{data.buttonName}}</button>
+</div>
