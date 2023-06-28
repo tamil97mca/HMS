@@ -78,7 +78,8 @@
               "browserTarget": "HMS:build:production"
             },
             "development": {
-              "browserTarget": "HMS:build:development"
+              "browserTarget": "HMS:build:development",
+              "proxyConfig": "proxy.config.json"
             }
           },
           "defaultConfiguration": "development"

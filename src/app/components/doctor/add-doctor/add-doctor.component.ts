@@ -15,6 +15,7 @@ export class AddDoctorComponent implements OnInit {
   formGroup!: FormGroup;
 
   id!: string;
+  rev!: string;
   name!: string;
   mobile!: string;
   email!: string;
@@ -30,12 +31,13 @@ export class AddDoctorComponent implements OnInit {
   // isReceptionist!: boolean;
   // isLaboratory!: boolean;
   // isPharmacy!: boolean;
-  
-  constructor(public dialogRef: MatDialogRef<AddDoctorComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private fb: FormBuilder, 
-    private _snackBar: MatSnackBar, private restApi: RestapiService) { 
 
-      this.id = data['id'];
+  constructor(public dialogRef: MatDialogRef<AddDoctorComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private fb: FormBuilder,
+    private _snackBar: MatSnackBar, private restApi: RestapiService) {
+
+      this.id = data['_id'];
+      this.rev = data['_rev'];
       this.name = data.name;
       this.mobile = data.mobile;
       this.email = data.email;
@@ -43,19 +45,20 @@ export class AddDoctorComponent implements OnInit {
       this.department = data.department;
       this.birthdate = data.birthdate;
       this.qualifications = data.qualifications;
-      this.status = data.status;      
+      this.status = data.status;
     }
 
   ngOnInit(): void {
 
     if(this.id) {
-      this.restApi.getSingleData('/Doctor', this.id).subscribe((result:any) => {
+      this.restApi.findOne('hms', this.id).then((result:any) => {
         console.log("$$$$", result)
       })
     }
 
     this.formGroup = this.fb.group({
-      id: [this.id, [Validators.required]],
+      _id: [this.id, [Validators.required]],
+      _rev: [this.rev, [Validators.required]],
       name: [ this.name, [Validators.required]],
       mobile: [ this.mobile, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
       email: [ this.email, [Validators.required, Validators.email]],
@@ -68,11 +71,17 @@ export class AddDoctorComponent implements OnInit {
   }
 
   dialogClose(): void {
-    this.dialogRef.close();    
+    this.dialogRef.close();
   }
 
   openSnackBar(message: string, action: string) {
-    this.dialogRef.close(this.formGroup.value);
+    if (this.id) {
+      this.dialogRef.close(this.formGroup.value);
+    } else {
+      delete this.formGroup.value._id;
+      delete this.formGroup.value._rev;
+      this.dialogRef.close(this.formGroup.value);
+    }
     this._snackBar.open(message, action);
   }
 }

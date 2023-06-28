@@ -18,7 +18,8 @@ export interface PeriodicElement {
 export interface DialogData {
   title: string,
   buttonName: string,
-  id: string,
+  _id: string,
+  _rev: string;
   name: string,
   mobile: string,
   email: string,
@@ -50,16 +51,18 @@ export class DoctorComponent implements OnInit {
     private _liveAnnouncer: LiveAnnouncer) { }
 
   ngOnInit(): void {
-    this.restApi.getAllData('/Doctor').subscribe((result: any) => {
-      console.log("RESULT", result);
-      this.totalDoctors = result.length;
-      this.dataSource = new MatTableDataSource(result);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-
-    })
+    this.getAllDoctors();
   }
 
+  getAllDoctors() {
+    this.restApi.findAll('hms').then((result:any) => {
+      console.log("Cloudant API Response", result);
+      this.totalDoctors = result.records.total_rows;
+      this.dataSource = new MatTableDataSource(result.records.rows);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
+  }
   openDialog() {
 
     const dialogRef = this.dialog.open(AddDoctorComponent, {
@@ -74,8 +77,9 @@ export class DoctorComponent implements OnInit {
       console.log('The dialog was closed');
       console.log(result);
       if (result) {
-        this.restApi.addSingleData('/Doctor', result).then((data: any) => {
+        this.restApi.save('/hms', result).then((data: any) => {
           console.log(data);
+          this.getAllDoctors();
         })
       }
     });
@@ -131,13 +135,13 @@ export class DoctorComponent implements OnInit {
 
   editDoctor(element: any) {
     console.log("element", element);
-    if (element.id === null || element.name === null) {
+    if (element._id === null || element.name === null) {
       return
     }
 
-    let data = element; 
+    let data = element;
     data.title = 'Update Doctor';
-    data.buttonName = 'Update'    
+    data.buttonName = 'Update'
     const dialogRef = this.dialog.open(AddDoctorComponent, {
       width: '650px',
       hasBackdrop: true,
@@ -151,9 +155,10 @@ export class DoctorComponent implements OnInit {
       console.log(result);
       if (result) {
         delete result.title
-        delete result.buttonName;        
-        this.restApi.updateSingleData('/Doctor', result.id, result).then((data: any) => {
+        delete result.buttonName;
+        this.restApi.updateOne('hms', result._id, result).then((data: any) => {
           console.log(data);
+          this.getAllDoctors();
         })
       }
     });
@@ -161,8 +166,9 @@ export class DoctorComponent implements OnInit {
   }
 
   deleteDoctor(element: any) {
-    this.restApi.deleteSingleData('Doctor', element.id).then((res:any) => {
+    this.restApi.deleteOne('hms', element._id, element._rev).then((res:any) => {
       console.log("ressss", res);
+      this.getAllDoctors();
     })
   }
 }
